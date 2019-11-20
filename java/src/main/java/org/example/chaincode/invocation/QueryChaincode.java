@@ -74,7 +74,7 @@ public class QueryChaincode {
 			}
 
 			Thread.sleep(10000);
-			String[] args1 = {"CARD1"};
+			String[] args1 = {"CAR1"};
 			Logger.getLogger(QueryChaincode.class.getName()).log(Level.INFO, "Querying for a card - " + args1[0]);
 			
 			Collection<ProposalResponse>  responses1Query = channelClient.queryByChainCode("fabcar", "queryCard", args1);

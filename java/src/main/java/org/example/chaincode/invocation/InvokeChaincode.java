@@ -75,7 +75,7 @@ public class InvokeChaincode {
 			ChaincodeID ccid = ChaincodeID.newBuilder().setName(Config.CHAINCODE_1_NAME).build();
 			request.setChaincodeID(ccid);
 			request.setFcn("createCard");
-			String[] arguments = { "CARD1", "Chevy", "Volt", "Red", "Nick" };
+			String[] arguments = { "CAR1", "Chevy", "Volt", "Red", "Nick" };
 			request.setArgs(arguments);
 			request.setProposalWaitTime(1000);
 

@@ -43,7 +43,7 @@ type SmartContract struct {
 }
 
 // Define the card structure, with 4 properties.  Structure tags are used by encoding/json library
-type Card struct {
+type Car struct {
 	Make   string `json:"make"`
 	Model  string `json:"model"`
 	Colour string `json:"colour"`
@@ -93,24 +93,24 @@ func (s *SmartContract) queryCard(APIstub shim.ChaincodeStubInterface, args []st
 }
 
 func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Response {
-	cards := []Card{
-		Card{Make: "Toyota", Model: "Prius", Colour: "blue", Owner: "Tomoko"},
-		Card{Make: "Ford", Model: "Mustang", Colour: "red", Owner: "Brad"},
-		Card{Make: "Hyundai", Model: "Tucson", Colour: "green", Owner: "Jin Soo"},
-		Card{Make: "Volkswagen", Model: "Passat", Colour: "yellow", Owner: "Max"},
-		Card{Make: "Tesla", Model: "S", Colour: "black", Owner: "Adriana"},
-		Card{Make: "Peugeot", Model: "205", Colour: "purple", Owner: "Michel"},
-		Card{Make: "Chery", Model: "S22L", Colour: "white", Owner: "Aarav"},
-		Card{Make: "Fiat", Model: "Punto", Colour: "violet", Owner: "Pari"},
-		Card{Make: "Tata", Model: "Nano", Colour: "indigo", Owner: "Valeria"},
-		Card{Make: "Holden", Model: "Barina", Colour: "brown", Owner: "Shotaro"},
+	cards := []Car{
+		Car{Make: "Toyota", Model: "Prius", Colour: "blue", Owner: "Tomoko"},
+		Car{Make: "Ford", Model: "Mustang", Colour: "red", Owner: "Brad"},
+		Car{Make: "Hyundai", Model: "Tucson", Colour: "green", Owner: "Jin Soo"},
+		Car{Make: "Volkswagen", Model: "Passat", Colour: "yellow", Owner: "Max"},
+		Car{Make: "Tesla", Model: "S", Colour: "black", Owner: "Adriana"},
+		Car{Make: "Peugeot", Model: "205", Colour: "purple", Owner: "Michel"},
+		Car{Make: "Chery", Model: "S22L", Colour: "white", Owner: "Aarav"},
+		Car{Make: "Fiat", Model: "Punto", Colour: "violet", Owner: "Pari"},
+		Car{Make: "Tata", Model: "Nano", Colour: "indigo", Owner: "Valeria"},
+		Car{Make: "Holden", Model: "Barina", Colour: "brown", Owner: "Shotaro"},
 	}
 
 	i := 0
 	for i < len(cards) {
 		fmt.Println("i is ", i)
 		cardAsBytes, _ := json.Marshal(cards[i])
-		APIstub.PutState("CARD"+strconv.Itoa(i), cardAsBytes)
+		APIstub.PutState("CAR"+strconv.Itoa(i), cardAsBytes)
 		fmt.Println("Added", cards[i])
 		i = i + 1
 	}
@@ -134,8 +134,8 @@ func (s *SmartContract) createCard(APIstub shim.ChaincodeStubInterface, args []s
 
 func (s *SmartContract) queryAllCards(APIstub shim.ChaincodeStubInterface) sc.Response {
 
-	startKey := "CARD0"
-	endKey := "CARD999"
+	startKey := "CAR0"
+	endKey := "CAR999"
 
 	resultsIterator, err := APIstub.GetStateByRange(startKey, endKey)
 	if err != nil {
