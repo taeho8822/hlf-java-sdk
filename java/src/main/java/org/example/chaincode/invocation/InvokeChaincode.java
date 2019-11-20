@@ -74,8 +74,67 @@ public class InvokeChaincode {
 			TransactionProposalRequest request = fabClient.getInstance().newTransactionProposalRequest();
 			ChaincodeID ccid = ChaincodeID.newBuilder().setName(Config.CHAINCODE_1_NAME).build();
 			request.setChaincodeID(ccid);
-			request.setFcn("createCar");
-			String[] arguments = { "CAR1", "Chevy", "Volt", "Red", "Nick" };
+			request.setFcn("createCard");
+			String[] arguments = { 
+									"CARD1",
+									"SPADE|1",
+									"SPADE|2",
+									"SPADE|3",
+									"SPADE|4",
+									"SPADE|5",
+									"SPADE|6",
+									"SPADE|7",
+									"SPADE|8",
+									"SPADE|9",
+									"SPADE|10",
+									"SPADE|11",
+									"SPADE|12",
+									"SPADE|13",
+									"HEART|1",
+									"HEART|2",
+									"HEART|3",
+									"HEART|4",
+									"HEART|5",
+									"HEART|6",
+									"HEART|7",
+									"HEART|8",
+									"HEART|9",
+									"HEART|10",
+									"HEART|11",
+									"HEART|12",
+									"HEART|13",
+									"CLUB|1",
+									"CLUB|2",
+									"CLUB|3",
+									"CLUB|4",
+									"CLUB|5",
+									"CLUB|6",
+									"CLUB|7",
+									"CLUB|8",
+									"CLUB|9",
+									"CLUB|10",
+									"CLUB|11",
+									"CLUB|12",
+									"CLUB|13",
+									"DIAMOND|1",
+									"DIAMOND|2",
+									"DIAMOND|3",
+									"DIAMOND|4",
+									"DIAMOND|5",
+									"DIAMOND|6",
+									"DIAMOND|7",
+									"DIAMOND|8",
+									"DIAMOND|9",
+									"DIAMOND|10",
+									"DIAMOND|11",
+									"DIAMOND|12",
+									"DIAMOND|13" 
+								};
+			
+			
+			
+			
+			
 			request.setArgs(arguments);
 			request.setProposalWaitTime(1000);
 
@@ -88,7 +147,7 @@ public class InvokeChaincode {
 			Collection<ProposalResponse> responses = channelClient.sendTransactionProposal(request);
 			for (ProposalResponse res: responses) {
 				Status status = res.getStatus();
-				Logger.getLogger(InvokeChaincode.class.getName()).log(Level.INFO,"Invoked createCar on "+Config.CHAINCODE_1_NAME + ". Status - " + status);
+				Logger.getLogger(InvokeChaincode.class.getName()).log(Level.INFO,"Invoked createCard on "+Config.CHAINCODE_1_NAME + ". Status - " + status);
 			}
 									
 		} catch (Exception e) {
