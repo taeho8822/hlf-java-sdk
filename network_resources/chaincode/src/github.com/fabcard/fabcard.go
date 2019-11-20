@@ -1,4 +1,4 @@
-3/*
+/*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -42,8 +42,8 @@ import (
 type SmartContract struct {
 }
 
-// Define the car structure, with 4 properties.  Structure tags are used by encoding/json library
-type Car struct {
+// Define the card structure, with 4 properties.  Structure tags are used by encoding/json library
+type Card struct {
 	C1   string `json:"c1"`
 	C2   string `json:"c2"`
 	C3   string `json:"c3"`
@@ -99,7 +99,7 @@ type Car struct {
 }
 
 /*
- * The Init method is called when the Smart Contract "fabcar" is instantiated by the blockchain network
+ * The Init method is called when the Smart Contract "fabcard" is instantiated by the blockchain network
  * Best practice is to have any Ledger initialization in separate function -- see initLedger()
  */
 func (s *SmartContract) Init(APIstub shim.ChaincodeStubInterface) sc.Response {
@@ -107,7 +107,7 @@ func (s *SmartContract) Init(APIstub shim.ChaincodeStubInterface) sc.Response {
 }
 
 /*
- * The Invoke method is called as a result of an application request to run the Smart Contract "fabcar"
+ * The Invoke method is called as a result of an application request to run the Smart Contract "fabcard"
  * The calling application program has also specified the particular smart contract function to be called, with arguments
  */
 func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response {
@@ -116,15 +116,15 @@ func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response 
 	function, args := APIstub.GetFunctionAndParameters()
 	// Route to the appropriate handler function to interact with the ledger appropriately
 	if function == "queryCard" {
-		return s.queryCar(APIstub, args)
+		return s.queryCard(APIstub, args)
 	} else if function == "initLedger" {
 		return s.initLedger(APIstub)
 	} else if function == "createCard" {
-		return s.createCar(APIstub, args)
+		return s.createCard(APIstub, args)
 	} else if function == "queryAllCards" {
-		return s.queryAllCars(APIstub)
+		return s.queryAllCards(APIstub)
 	} else if function == "changeCardOwner" {
-		return s.changeCarOwner(APIstub, args)
+		return s.changeCardOwner(APIstub, args)
 	}
 
 	return shim.Error("Invalid Smart Contract function name.")
@@ -136,8 +136,8 @@ func (s *SmartContract) queryCard(APIstub shim.ChaincodeStubInterface, args []st
 		return shim.Error("Incorrect number of arguments. Expecting 1")
 	}
 
-	carAsBytes, _ := APIstub.GetState(args[0])
-	return shim.Success(carAsBytes)
+	cardAsBytes, _ := APIstub.GetState(args[0])
+	return shim.Success(cardAsBytes)
 }
 
 //HEART, DIAMOND, SPADE, CLUB
@@ -211,7 +211,7 @@ func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Respo
 	return shim.Success(nil)
 }
 
-func (s *SmartContract) createCar(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
+func (s *SmartContract) createCard(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
 
 	if len(args) != 5 {
 		return shim.Error("Incorrect number of arguments. Expecting 5")
@@ -278,7 +278,7 @@ func (s *SmartContract) createCar(APIstub shim.ChaincodeStubInterface, args []st
 	return shim.Success(nil)
 }
 
-func (s *SmartContract) queryAllCars(APIstub shim.ChaincodeStubInterface) sc.Response {
+func (s *SmartContract) queryAllCards(APIstub shim.ChaincodeStubInterface) sc.Response {
 
 	startKey := "CARD0"
 	endKey := "CARD999"
@@ -330,7 +330,7 @@ func (s *SmartContract) changeCardOwner(APIstub shim.ChaincodeStubInterface, arg
 	cardAsBytes, _ := APIstub.GetState(args[0])
 	card := Card{}
 
-	json.Unmarshal(cardAsBytes, &car)
+	json.Unmarshal(cardAsBytes, &card)
 	card.Owner = args[1]
 
 	cardAsBytes, _ = json.Marshal(card)
