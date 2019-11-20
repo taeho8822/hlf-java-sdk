@@ -71,8 +71,8 @@ public class InvokeQueryChaincode {
 			TransactionProposalRequest request = fabClient.getInstance().newTransactionProposalRequest();
 			ChaincodeID ccid = ChaincodeID.newBuilder().setName(Config.CHAINCODE_1_NAME).build();
 			request.setChaincodeID(ccid);
-			request.setFcn("createCar");
-			String[] arguments = { "CAR1", "Chevy", "Volt", "Red", "Nick" };
+			request.setFcn("createCard");
+			String[] arguments = { "CARD1", "Chevy", "Volt", "Red", "Nick" };
 			request.setArgs(arguments);
 			request.setProposalWaitTime(1000);
 
@@ -87,15 +87,15 @@ public class InvokeQueryChaincode {
 			
 			Thread.sleep(10000);
 			
-			Collection<ProposalResponse>  responsesQuery = channelClient.queryByChainCode("fabcar", "queryAllCars", null);
+			Collection<ProposalResponse>  responsesQuery = channelClient.queryByChainCode("fabcar", "queryAllCards", null);
 			for (ProposalResponse pres : responsesQuery) {
 				String stringResponse = new String(pres.getChaincodeActionResponsePayload());
 				System.out.println(stringResponse);
 			}
 
 			Thread.sleep(10000);
-			String[] args1 = {"CAR1"};
-			Collection<ProposalResponse>  responses1Query = channelClient.queryByChainCode("fabcar", "queryCar", args1);
+			String[] args1 = {"CARD1"};
+			Collection<ProposalResponse>  responses1Query = channelClient.queryByChainCode("fabcar", "queryCard", args1);
 			for (ProposalResponse pres : responses1Query) {
 				String stringResponse = new String(pres.getChaincodeActionResponsePayload());
 				System.out.println(stringResponse);
