@@ -44,58 +44,10 @@ type SmartContract struct {
 
 // Define the card structure, with 4 properties.  Structure tags are used by encoding/json library
 type Card struct {
-	C1   string `json:"c1"`
-	C2   string `json:"c2"`
-	C3   string `json:"c3"`
-	C4   string `json:"c4"`
-	C5   string `json:"c5"`
-	C6   string `json:"c6"`
-	C7   string `json:"c7"`
-	C8   string `json:"c8"`
-	C9   string `json:"c9"`
-	C10   string `json:"c10"`
-	C11   string `json:"c11"`
-	C12   string `json:"c12"`
-	C13   string `json:"c13"`
-	C14   string `json:"c14"`
-	C15   string `json:"c15"`
-	C16   string `json:"c16"`
-	C17   string `json:"c17"`
-	C18   string `json:"c18"`
-	C19   string `json:"c19"`
-	C20   string `json:"c20"`
-	C21   string `json:"c21"`
-	C22   string `json:"c22"`
-	C23   string `json:"c23"`
-	C24   string `json:"c24"`
-	C25   string `json:"c25"`
-	C26   string `json:"c26"`
-	C27   string `json:"c27"`
-	C28   string `json:"c28"`
-	C29   string `json:"c29"`
-	C30   string `json:"c30"`
-	C31   string `json:"c31"`
-	C32   string `json:"c32"`
-	C33   string `json:"c33"`
-	C34   string `json:"c34"`
-	C35   string `json:"c35"`
-	C36   string `json:"c36"`
-	C37   string `json:"c37"`
-	C38   string `json:"c38"`
-	C39   string `json:"c39"`
-	C40   string `json:"c40"`
-	C41   string `json:"c41"`
-	C42   string `json:"c42"`
-	C43   string `json:"c43"`
-	C44   string `json:"c44"`
-	C45   string `json:"c45"`
-	C46   string `json:"c46"`
-	C47   string `json:"c47"`
-	C48   string `json:"c48"`
-	C49   string `json:"c49"`
-	C50   string `json:"c50"`
-	C51   string `json:"c51"`
-	C52   string `json:"c52"`
+	Make   string `json:"make"`
+	Model  string `json:"model"`
+	Colour string `json:"colour"`
+	Owner  string `json:"owner"`
 }
 
 /*
@@ -142,60 +94,16 @@ func (s *SmartContract) queryCard(APIstub shim.ChaincodeStubInterface, args []st
 
 func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Response {
 	cards := []Card{
-		Card{
-				C1:"SPADE|1",
-				C2: "SPADE|2",
-				C3: "SPADE|3",
-				C4: "SPADE|4",
-				C5: "SPADE|5",
-				C6: "SPADE|6",
-				C7: "SPADE|7",
-				C8: "SPADE|8",
-				C9: "SPADE|9",
-				C10: "SPADE|10",
-				C11: "SPADE|11",
-				C12: "SPADE|12",
-				C13: "SPADE|13",
-				C14: "HEART|1",
-				C15: "HEART|2",
-				C16: "HEART|3",
-				C17: "HEART|4",
-				C18: "HEART|5",
-				C19: "HEART|6",
-				C20: "HEART|7",
-				C21: "HEART|8",
-				C22: "HEART|9",
-				C23: "HEART|10",
-				C24: "HEART|11",
-				C25: "HEART|12",
-				C26: "HEART|13",
-				C27: "CLUB|1",
-				C28: "CLUB|2",
-				C29: "CLUB|3",
-				C30: "CLUB|4",
-				C31: "CLUB|5",
-				C32: "CLUB|6",
-				C33: "CLUB|7",
-				C34: "CLUB|8",
-				C35: "CLUB|9",
-				C36: "CLUB|10",
-				C37: "CLUB|11",
-				C38: "CLUB|12",
-				C39: "CLUB|13",
-				C40: "DIAMOND|1",
-				C41: "DIAMOND|2",
-				C42: "DIAMOND|3",
-				C43: "DIAMOND|4",
-				C44: "DIAMOND|5",
-				C45: "DIAMOND|6",
-				C46: "DIAMOND|7",
-				C47: "DIAMOND|8",
-				C48: "DIAMOND|9",
-				C49: "DIAMOND|10",
-				C50: "DIAMOND|11",
-				C51: "DIAMOND|12",
-				C52: "DIAMOND|13"
-		}
+		Car{Make: "Toyota", Model: "Prius", Colour: "blue", Owner: "Tomoko"},
+		Car{Make: "Ford", Model: "Mustang", Colour: "red", Owner: "Brad"},
+		Car{Make: "Hyundai", Model: "Tucson", Colour: "green", Owner: "Jin Soo"},
+		Car{Make: "Volkswagen", Model: "Passat", Colour: "yellow", Owner: "Max"},
+		Car{Make: "Tesla", Model: "S", Colour: "black", Owner: "Adriana"},
+		Car{Make: "Peugeot", Model: "205", Colour: "purple", Owner: "Michel"},
+		Car{Make: "Chery", Model: "S22L", Colour: "white", Owner: "Aarav"},
+		Car{Make: "Fiat", Model: "Punto", Colour: "violet", Owner: "Pari"},
+		Car{Make: "Tata", Model: "Nano", Colour: "indigo", Owner: "Valeria"},
+		Car{Make: "Holden", Model: "Barina", Colour: "brown", Owner: "Shotaro"},
 	}
 
 	i := 0
@@ -216,58 +124,7 @@ func (s *SmartContract) createCard(APIstub shim.ChaincodeStubInterface, args []s
 		return shim.Error("Incorrect number of arguments. Expecting 5")
 	}
 
-	var card = Card{C1 : args[1], 
-					C2 : args[2], 
-					C3 : args[3], 
-					C4 : args[4], 
-					C5 : args[5], 
-					C6 : args[6], 
-					C7 : args[7], 
-					C8 : args[8], 
-					C9 : args[9], 
-					C10: args[10],
-					C11: args[11],
-					C12: args[12],
-					C13: args[13],
-					C14: args[14],
-					C15: args[15],
-					C16: args[16],
-					C17: args[17],
-					C18: args[18],
-					C19: args[19],
-					C20: args[20],
-					C21: args[21],
-					C22: args[22],
-					C23: args[23],
-					C24: args[24],
-					C25: args[25],
-					C26: args[26],
-					C27: args[27],
-					C28: args[28],
-					C29: args[29],
-					C30: args[30],
-					C31: args[31],
-					C32: args[32],
-					C33: args[33],
-					C34: args[34],
-					C35: args[35],
-					C36: args[36],
-					C37: args[37],
-					C38: args[38],
-					C39: args[39],
-					C40: args[40],
-					C41: args[41],
-					C42: args[42],
-					C43: args[43],
-					C44: args[44],
-					C45: args[45],
-					C46: args[46],
-					C47: args[47],
-					C48: args[48],
-					C49: args[49],
-					C50: args[50],
-					C51: args[51],
-					C52: args[52]}
+	var car = Car{Make: args[1], Model: args[2], Colour: args[3], Owner: args[4]}
 
 	cardAsBytes, _ := json.Marshal(card)
 	APIstub.PutState(args[0], cardAsBytes)
