@@ -44,10 +44,10 @@ type SmartContract struct {
 
 // Define the card structure, with 4 properties.  Structure tags are used by encoding/json library
 type Card struct {
-	Make   string `json:"make"`
-	Model  string `json:"model"`
-	Colour string `json:"colour"`
-	Owner  string `json:"owner"`
+	Round   string `json:"round"`
+	EncCard  string `json:"enccard"`
+	Casino string `json:"casino"`
+	Dealer  string `json:"dealer"`
 }
 
 /*
@@ -75,8 +75,8 @@ func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response 
 		return s.createCard(APIstub, args)
 	} else if function == "queryAllCards" {
 		return s.queryAllCards(APIstub)
-	} else if function == "changeCardOwner" {
-		return s.changeCardOwner(APIstub, args)
+	} else if function == "changeCardDealer" {
+		return s.changeCardDealer(APIstub, args)
 	}
 
 	return shim.Error("Invalid Smart Contract function name.")
@@ -94,16 +94,7 @@ func (s *SmartContract) queryCard(APIstub shim.ChaincodeStubInterface, args []st
 
 func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Response {
 	cards := []Card{
-		Car{Make: "Toyota", Model: "Prius", Colour: "blue", Owner: "Tomoko"},
-		Car{Make: "Ford", Model: "Mustang", Colour: "red", Owner: "Brad"},
-		Car{Make: "Hyundai", Model: "Tucson", Colour: "green", Owner: "Jin Soo"},
-		Car{Make: "Volkswagen", Model: "Passat", Colour: "yellow", Owner: "Max"},
-		Car{Make: "Tesla", Model: "S", Colour: "black", Owner: "Adriana"},
-		Car{Make: "Peugeot", Model: "205", Colour: "purple", Owner: "Michel"},
-		Car{Make: "Chery", Model: "S22L", Colour: "white", Owner: "Aarav"},
-		Car{Make: "Fiat", Model: "Punto", Colour: "violet", Owner: "Pari"},
-		Car{Make: "Tata", Model: "Nano", Colour: "indigo", Owner: "Valeria"},
-		Car{Make: "Holden", Model: "Barina", Colour: "brown", Owner: "Shotaro"},
+		Card{Round: "1", EncCard: "[{\"Suit\":SPADE,\"Face\":1},{\"Suit\":SPADE,\"Face\":2},{\"Suit\":SPADE,\"Face\":3},{\"Suit\":SPADE,\"Face\":4},{\"Suit\":SPADE,\"Face\":5},{\"Suit\":SPADE,\"Face\":6},{\"Suit\":SPADE,\"Face\":7},{\"Suit\":SPADE,\"Face\":8},{\"Suit\":SPADE,\"Face\":9},{\"Suit\":SPADE,\"Face\":10},{\"Suit\":SPADE,\"Face\":11},{\"Suit\":SPADE,\"Face\":12},{\"Suit\":SPADE,\"Face\":13},{\"Suit\":HEART,\"Face\":1},{\"Suit\":HEART,\"Face\":2},{\"Suit\":HEART,\"Face\":3},{\"Suit\":HEART,\"Face\":4},{\"Suit\":HEART,\"Face\":5},{\"Suit\":HEART,\"Face\":6},{\"Suit\":HEART,\"Face\":7},{\"Suit\":HEART,\"Face\":8},{\"Suit\":HEART,\"Face\":9},{\"Suit\":HEART,\"Face\":10},{\"Suit\":HEART,\"Face\":11},{\"Suit\":HEART,\"Face\":12},{\"Suit\":HEART,\"Face\":13},{\"Suit\":CLUB,\"Face\":1},{\"Suit\":CLUB,\"Face\":2},{\"Suit\":CLUB,\"Face\":3},{\"Suit\":CLUB,\"Face\":4},{\"Suit\":CLUB,\"Face\":5},{\"Suit\":CLUB,\"Face\":6},{\"Suit\":CLUB,\"Face\":7},{\"Suit\":CLUB,\"Face\":8},{\"Suit\":CLUB,\"Face\":9},{\"Suit\":CLUB,\"Face\":10},{\"Suit\":CLUB,\"Face\":11},{\"Suit\":CLUB,\"Face\":12},{\"Suit\":CLUB,\"Face\":13},{\"Suit\":DIAMOND,\"Face\":1},{\"Suit\":DIAMOND,\"Face\":2},{\"Suit\":DIAMOND,\"Face\":3},{\"Suit\":DIAMOND,\"Face\":4},{\"Suit\":DIAMOND,\"Face\":5},{\"Suit\":DIAMOND,\"Face\":6},{\"Suit\":DIAMOND,\"Face\":7},{\"Suit\":DIAMOND,\"Face\":8},{\"Suit\":DIAMOND,\"Face\":9},{\"Suit\":DIAMOND,\"Face\":10},{\"Suit\":DIAMOND,\"Face\":11},{\"Suit\":DIAMOND,\"Face\":12},{\"Suit\":DIAMOND,\"Face\":13}]", Casino: "7LUCK", Dealer: "Taeho Kim"},
 	}
 
 	i := 0
@@ -124,7 +115,7 @@ func (s *SmartContract) createCard(APIstub shim.ChaincodeStubInterface, args []s
 		return shim.Error("Incorrect number of arguments. Expecting 5")
 	}
 
-	var car = Car{Make: args[1], Model: args[2], Colour: args[3], Owner: args[4]}
+	var card = Card{Round: args[1], EncCard: args[2], Casino: args[3], Dealer: args[4]}
 
 	cardAsBytes, _ := json.Marshal(card)
 	APIstub.PutState(args[0], cardAsBytes)
@@ -175,7 +166,7 @@ func (s *SmartContract) queryAllCards(APIstub shim.ChaincodeStubInterface) sc.Re
 	return shim.Success(buffer.Bytes())
 }
 
-func (s *SmartContract) changeCardOwner(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
+func (s *SmartContract) changeCardDealer(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
 
 	if len(args) != 2 {
 		return shim.Error("Incorrect number of arguments. Expecting 2")
@@ -185,7 +176,7 @@ func (s *SmartContract) changeCardOwner(APIstub shim.ChaincodeStubInterface, arg
 	card := Card{}
 
 	json.Unmarshal(cardAsBytes, &card)
-	card.Owner = args[1]
+	card.Dealer = args[1]
 
 	cardAsBytes, _ = json.Marshal(card)
 	APIstub.PutState(args[0], cardAsBytes)
