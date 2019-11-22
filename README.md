@@ -1,7 +1,7 @@
 
 ## Hyperledger Fabric 개발 환경 구축
 
-- 필수 구성 요소 다운로드 및 설치  
+##### 1-1 필수 구성 요소 다운로드 및 설치
   
 ```
 curl -O https://hyperledger.github.io/composer/latest/prereqs-ubuntu.sh
@@ -10,42 +10,42 @@ chmod u+x prereqs-ubuntu.sh
 ```
   
   
-- sudo 없이 docker 명령어 실행  
+##### 1-2 sudo 없이 docker 명령어 실행  
 
 ```
 sudo usermod -aG docker $USER
 ```
   
   
- - 서버 재실행  
+##### 1-3 서버 재실행  
     
 ```
 sudo reboot
 ```
   
 
- - java 설치 (JDK, JRE)  
+##### 1-4 java 설치 (JDK, JRE)  
 
 ```
 sudo apt-get install openjdk-8-jre
 sudo apt-get install openjdk-8-jdk
 ```
 
-- maven 설치
+##### 1-5 maven 설치
 
 ```
 sudo apt install maven
 ```
 ## Hyperledger Fabric 네트워크 구축
 
-- git 다운로드
+##### 2-1 git 다운로드
 
 
 ```
 $ git clone https://github.com/taeho8822/hlf-java-sdk.git
 ```
 
-- 네트워크 설치 
+##### 2-2-1 네트워크 설치 
 
 ```
 cd network
@@ -53,7 +53,7 @@ chmod +x build.sh
 ./build.sh
 ```
 
-- 네트워크 stop
+##### 2-2-2 네트워크 stop
 
 ```
 cd network
@@ -61,7 +61,7 @@ chmod +x stop.sh
 ./stop.sh
 ```
 
-- 네트워크 삭제
+##### 2-2-3 네트워크 삭제
 
 ```
 cd network
@@ -69,28 +69,27 @@ chmod +x teardown.sh
 ./teardown.sh
 ```
 
-- JAVA SDK 메이븐 빌드 & 패킷
+##### 2-3 JAVA SDK 메이븐 빌드 & 패킷
 
 ```
 cd ../java
 mvn install
 ```
 
-- blockchain-client.jar 으로 복사
+##### 2-4 blockchain-client.jar 으로 복사
 
 ```
 cd target
 cp blockchain-java-sdk-0.0.1-SNAPSHOT-jar-with-dependencies.jar blockchain-client.jar
 ```
 
-- network_resources 폴더로 복사
+##### 2-5 network_resources 폴더로 복사
 
 ```
 cp blockchain-client.jar ../../network_resources
 ```
 
-
-- 채널생성 `mychannel`
+##### 2-6 채널생성 `mychannel`
 
 ```
 cd ../../network_resources
@@ -114,7 +113,7 @@ Output:
 ```
 
 
-- fabcar 체인코드 배포
+##### 2-7 fabcar 체인코드 배포
 
 ```
 java -cp blockchain-client.jar org.example.network.DeployInstantiateChaincode
@@ -152,7 +151,7 @@ java -cp blockchain-client.jar org.example.network.DeployInstantiateChaincode
 
 
 
-- enroll user 등록
+##### 2-7 enroll user 등록
 
 ```
 java -cp blockchain-client.jar org.example.user.RegisterEnrollUser
@@ -173,7 +172,7 @@ java -cp blockchain-client.jar org.example.user.RegisterEnrollUser
     INFO: CA -http://localhost:7054 Enrolled User - user1524459395783
  ```
 
- - Perform Invoke and Query on network
+ ##### 2-8 Invoke and Query on network
 
 ```
 java -cp blockchain-client.jar org.example.chaincode.invocation.InvokeChaincode
