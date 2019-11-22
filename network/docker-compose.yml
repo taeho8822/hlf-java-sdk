@@ -75,6 +75,13 @@ services:
       # # bridge network as the peers
       # # https://docs.docker.com/compose/networking/
       - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=network_custom
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb1:5984
+      # The CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME and CORE_LEDGER_STATE_COUCHDBCONFIG_PASS    WORD
+      # provide the credentials for ledger to connect to CouchDB.  The username and password     must
+      # match the username and password set for the associated CouchDB.
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric
     command: peer node start
     ports:
@@ -89,6 +96,7 @@ services:
         - ../network_resources/config:/etc/hyperledger/configtx
     depends_on:
       - orderer.example.com
+      - couchdb1
 
   peer1.org1.example.com:
     container_name: peer1.org1.example.com
@@ -102,6 +110,13 @@ services:
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/fabric/msp
       - CORE_PEER_ADDRESS=peer1.org1.example.com:7051
       - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=network_custom
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb2:5984
+      # The CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME and CORE_LEDGER_STATE_COUCHDBCONFIG_PASS    WORD
+      # provide the credentials for ledger to connect to CouchDB.  The username and password     must
+      # match the username and password set for the associated CouchDB.
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric
     command: peer node start
     networks:
@@ -116,6 +131,7 @@ services:
         - ../network_resources/config:/etc/hyperledger/configtx
     depends_on:
       - orderer.example.com
+      - couchdb2
 
   peer0.org2.example.com:
     container_name: peer0.org2.example.com
@@ -129,6 +145,13 @@ services:
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/fabric/msp
       - CORE_PEER_ADDRESS=peer0.org2.example.com:7051
       - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=network_custom
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb3:5984
+      # The CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME and CORE_LEDGER_STATE_COUCHDBCONFIG_PASS    WORD
+      # provide the credentials for ledger to connect to CouchDB.  The username and password     must
+      # match the username and password set for the associated CouchDB.
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric
     command: peer node start
     networks:
@@ -143,6 +166,7 @@ services:
         - ../network_resources/config:/etc/hyperledger/configtx
     depends_on:
       - orderer.example.com
+      - couchdb3
 
   peer1.org2.example.com:
     container_name: peer1.org2.example.com
@@ -156,6 +180,13 @@ services:
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/fabric/msp
       - CORE_PEER_ADDRESS=peer1.org2.example.com:7051
       - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=network_custom
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb4:5984
+      # The CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME and CORE_LEDGER_STATE_COUCHDBCONFIG_PASS    WORD
+      # provide the credentials for ledger to connect to CouchDB.  The username and password     must
+      # match the username and password set for the associated CouchDB.
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric
     command: peer node start
     networks:
@@ -170,3 +201,58 @@ services:
         - ../network_resources/config:/etc/hyperledger/configtx
     depends_on:
       - orderer.example.com
+      - couchdb4
+      
+    couchdb1:
+      container_name: couchdb1
+      image: hyperledger/fabric-couchdb
+      # Populate the COUCHDB_USER and COUCHDB_PASSWORD to set an admin user and password
+      # for CouchDB.  This will prevent CouchDB from operating in an "Admin Party" mode.
+      environment:
+        - COUCHDB_USER=
+        - COUCHDB_PASSWORD=
+      ports:
+        - 5984:5984
+      networks:
+        - basic
+
+    couchdb2:
+      container_name: couchdb2
+      image: hyperledger/fabric-couchdb
+      # Populate the COUCHDB_USER and COUCHDB_PASSWORD to set an admin user and password
+      # for CouchDB.  This will prevent CouchDB from operating in an "Admin Party" mode.
+      environment:
+        - COUCHDB_USER=
+        - COUCHDB_PASSWORD=
+      ports:
+        - 6984:5984
+      networks:
+        - basic
+
+    couchdb3:
+      container_name: couchdb3
+      image: hyperledger/fabric-couchdb
+      # Populate the COUCHDB_USER and COUCHDB_PASSWORD to set an admin user and password
+      # for CouchDB.  This will prevent CouchDB from operating in an "Admin Party" mode.
+      environment:
+        - COUCHDB_USER=
+        - COUCHDB_PASSWORD=
+      ports:
+        - 7984:5984
+      networks:
+        - basic
+                
+    couchdb4:
+      container_name: couchdb4
+      image: hyperledger/fabric-couchdb
+      # Populate the COUCHDB_USER and COUCHDB_PASSWORD to set an admin user and password
+      # for CouchDB.  This will prevent CouchDB from operating in an "Admin Party" mode.
+      environment:
+        - COUCHDB_USER=
+        - COUCHDB_PASSWORD=
+      ports:
+        - 8984:5984
+      networks:
+        - basic                
+     
+    
