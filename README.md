@@ -42,12 +42,15 @@ sudo apt install maven
 
 
 ```
-$ git clone https://github.com/taeho8822/hlf-java-sdk.git
+git clone https://github.com/taeho8822/hlf-java-sdk.git
 ```
 
 ##### 2-2-1 네트워크 설치 
 
 ```
+# 도커 이미지 설치
+curl -sSL https://bit.ly/2ysbOFE | bash -s -- 2.2.1 1.4.9
+
 cd network
 chmod +x build.sh
 ./build.sh
