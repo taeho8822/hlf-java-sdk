@@ -4,9 +4,7 @@
 ##### 1-1 필수 구성 요소 다운로드 및 설치
   
 ```
-curl -O https://hyperledger.github.io/composer/latest/prereqs-ubuntu.sh
-chmod u+x prereqs-ubuntu.sh
-./prereqs-ubuntu.sh
+curl -sSL https://bit.ly/2ysbOFE | bash -s -- 1.4.1 1.4.1
 ```
   
   
