@@ -1,7 +1,7 @@
 
 ## Hyperledger Fabric 개발 환경 구축
 
-##### 1-1 필수 구성 요소 다운로드 및 설치
+##### 1-1 HLF 이미지 다운로드 및 설치
   
 ```
 curl -sSL https://bit.ly/2ysbOFE | bash -s -- 1.4.1 1.4.1
